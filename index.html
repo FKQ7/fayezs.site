@@ -1,53 +1,160 @@
 <!DOCTYPE html>
 <html data-theme="DARK">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <title></title>
-  <style>
-    html, body {
-      height: 100%;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet"
+        type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Portfolio</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .terminal {
+            width: 350px; /* Default width */
+        }
+
+        @media only screen and (min-width: 768px) {
+            /* Adjust terminal width for laptops */
+            .terminal {
+                width: 500px; /* Adjust the width for laptops */
+            }
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .typing-animation::after {
+            content: "|";
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+        }
+
+        @keyframes blink-caret {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
+
 <body class="flex justify-center items-center h-full">
-  <div>
-    <aside class="bg-black text-white p-6 rounded-lg w-full max-w-lg font-mono">
-      <div class="flex justify-between items-center">
-        <div class="flex space-x-2 text-red-500">
-          <div class="w-3 h-3 rounded-full bg-red-500"></div>
-          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div class="w-3 h-3 rounded-full bg-green-500"></div>
-        </div>
-        <p class="text-sm">bash</p>
-      </div>
-      <div class="mt-4">
-        <p class="text-green-400">$ npm install Svelte</p>
-        <p class="text-white">+ Svelte@10.2.3</p>
-        <p class="text-white">added 1 package, and audited 2 packages in 3s</p>
-        <p class="text-green-400">$ npm run dev</p>
-        <div id="demo"></div>
-        <div class="tooltip tooltip-bottom flex justify-center items-center pt-4" data-tip="hello">
-          <button class="btn text-2xl"  onclick="typeWriter()">Run</button>
-        </div>
-      </div>
-    </aside>
-  </div>
+    <div class="terminal">
+        <aside class="bg-black text-white p-6 rounded-lg w-full max-w-lg font-mono">
+            <div class="flex justify-between items-center">
+                <div class="flex space-x-2 text-red-500">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <p class="text-sm">portfolio</p>
+            </div>
+            <div class="mt-4" id="output">
+                <p class="typing-animation">Welcome to My Portfolio! Type "help"<br> for command list.</p>
+            </div>
 
-<script>
-var i = 0;
-var txt = 'Coming soon!...';
-var speed = 50;
+            <div class=" flex justify-center items-center pt-4">
+                <input type="text" id="commandInput"
+                    class="p-2 bg-black text-white border-none outline-none"
+                    placeholder="Type a command..." onkeypress="handleKeyPress(event)">
+            </div>
+        </aside>
+    </div>
 
-function typeWriter() {
-  if (i < txt.length) {
-    document.getElementById("demo").innerHTML += txt.charAt(i);
-    i++;
-    setTimeout(typeWriter, speed);
-  }
-}
-</script>
+    <script>
+        var commands = {
+            "help": "Available commands:<br><br>- about<br>- projects<br>- contact<br>- skills",
+            "skills": "Skills:<br>HTML, CSS, JavaScript, React, Node.js, etc.",            "projects": `<p class="text-white">Projects</p>
+            <ul class="list-disc pl-8">
+                <li>1-Sub-Track Subscription notifying system
+                    <ul class="list-disc pl-8">
+                        <li>Tried of companies withdraw your money automatically? that’s is our case to notify you
+                            <ul class="list-disc pl-8">
+                                <li><a href="https://github.com/FKQ7/Sub-Track" class="text-blue-400">https://github.com/FKQ7/Sub-Track</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>2-AMT (Anime,Movie,Tv show)
+                    <ul class="list-disc pl-8">
+                        <li>My First Ever Big project with django it was 3 Yeas Ago, Normal Movie site
+                            <ul class="list-disc pl-8">
+                                <li><a href="https://github.com/FKQ7/AMT-0.3v" class="text-blue-400">https://github.com/FKQ7/AMT-0.3v</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>3-Django-Ninja-Snippets for Vscode
+                    <ul class="list-disc pl-8">
+                        <li>Django Snippets for vscode public
+                            <ul class="list-disc pl-8">
+                                <li><a href="https://github.com/FKQ7/Django-Ninja-Snippets" class="text-blue-400">https://github.com/FKQ7/Django-Ninja-Snippets</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>`,
+            "contact": "Contact me at:<br>your.email@example.com",
+            "about": "<p>Hello i'm fayez al-shwayya a back-end web developer based in Saudi arabia,Software Engineer currently working as Tech Lead of the at FAPS. I mostly do Back-end development, and I'm a</p>"
+        };
+
+        var maxCommands = 5; // Maximum number of commands to display
+        var commandCount = 0; // Counter for tracking the number of commands
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                const commandInput = document.getElementById("commandInput");
+                const command = commandInput.value.trim();
+                commandInput.value = ""; // Clear the input field
+                const output = document.getElementById("output");
+
+                // Add command to the output with animation
+                const commandElement = document.createElement("div");
+                commandElement.classList.add("command");
+                commandElement.innerHTML = `<p class="text-green-400">$ ${command}</p>`;
+                output.appendChild(commandElement);
+
+                // Add command response with animation
+                setTimeout(() => {
+                    const responseElement = document.createElement("div");
+                    responseElement.classList.add("command");
+                    if (commands.hasOwnProperty(command)) {
+                        responseElement.innerHTML = commands[command];
+                    } else {
+                        responseElement.innerHTML = `<p class="text-white">Command not recognized. Type "help" for command list.</p>`;
+                    }
+                    output.appendChild(responseElement);
+
+                    // Increment command count
+                    commandCount++;
+
+                    // Check if command count exceeds maximum
+                    if (commandCount > maxCommands) {
+                      // Remove the oldest command(s)
+                      for (var i = 0; i < maxCommands; i++) {
+                          output.removeChild(output.firstElementChild);
+                      }
+                      // Reset command count
+                      commandCount = maxCommands;
+                  }
+
+                  // Scroll to the bottom of the output
+                  output.scrollTop = output.scrollHeight;
+              }, 10);
+          }
+      }
+    </script>
 </body>
+
 </html>
